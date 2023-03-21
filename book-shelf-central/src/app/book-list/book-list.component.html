@@ -1,1 +1,156 @@
-<p>book-list works!</p>
+<div class="author-info" *ngIf="data">
+  <h2 class="author-name">{{ data.author }}</h2>
+  <p class="author-dob"><strong>Date of Birth:</strong> {{ data.birthday }}</p>
+  <p class="author-birthplace">
+    <strong>Place of Birth:</strong> {{ data.birthPlace }}
+  </p>
+</div>
+<div>
+  <button (click)="openAddEditModal(content)" class="add-book">Add Book</button>
+</div>
+<div class="book-list">
+  <div
+    *ngFor="let book of books"
+    class="book col-12 col-sm-12 col-md-6 col-lg-6"
+  >
+    <app-book-info [bookInfo]="book"></app-book-info>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Book</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <!-- old -->
+  <!-- <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <div class="mb-3">
+        <label for="title">Title *</label>
+        <div class="input-group">
+          <input
+            ngModel
+            required
+            id="title"
+            type="text"
+            class="form-control"
+            placeholder="Enter the title for new book"
+            name="title"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="imageUrl">Image URL *</label>
+        <div class="input-group">
+          <input
+            ngModel
+            required
+            id="imageUrl"
+            type="text"
+            class="form-control"
+            placeholder="Enter the Image URL"
+            name="imageUrl"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="purchaseLink">Purchase Link *</label>
+        <div class="input-group">
+          <input
+            ngModel
+            required
+            id="purchaseLink"
+            type="text"
+            class="form-control"
+            placeholder="Enter the Purchase Link"
+            name="purchaseLink"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="publishDate">Published Date *</label>
+        <div class="input-group">
+          <input
+            ngModel
+            required
+            id="publishDate"
+            type="text"
+            class="form-control"
+            placeholder="Enter the Published Date in YYYY format"
+            name="publishDate"
+          />
+        </div>
+      </div>
+    </form>
+  </div> -->
+  <!-- new code  -->
+  
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="modal-body">
+      <div class="mb-3">
+        <label for="title">Title *</label>
+        <div class="input-group">
+          <input formControlName="title"
+            id="title"
+            type="text"
+            class="form-control"
+            placeholder="Enter the title for new book"
+            name="title"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="imageUrl">Image URL *</label>
+        <div class="input-group">
+            <input formControlName="imageUrl"
+                id="imageUrl"
+                type="text"
+                class="form-control"
+                placeholder="Enter the Image URL"
+                name="imageUrl"
+            />
+            
+        </div>
+      </div>
+      <div class="mb-3">
+          <label for="purchaseLink">Purchase Link *</label>
+          <div class="input-group">
+            <input formControlName="purchaseLink"
+                id="purchaseLink"
+                type="text"
+                class="form-control"
+                placeholder="Enter the Purchase Link"
+                name="purchaseLink"
+            />
+            
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="publishDate">Published Date *</label>
+        <div class="input-group">
+          <input formControlName="publishDate"
+              id="publishDate"
+              type="text"
+              class="form-control"
+              placeholder="Enter the Published Date in YYYY format"
+              name="publishDate"
+          />
+          
+      </div>
+    </div>
+    <!-- <button type="submit" class="btn btn-outline-dark">Save</button> -->
+</div>
+ <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark">Save</button>
+  </div>
+</form>
+  <!-- end -->
+  <!-- <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark">Save</button>
+  </div> -->
+</ng-template>

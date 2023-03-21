@@ -16,3 +16,6 @@ export interface Book {
   purchaseLink: string;
   PublishDate: string;
 }
+export enum Constants {
+  SUCCESS = "success"
+}

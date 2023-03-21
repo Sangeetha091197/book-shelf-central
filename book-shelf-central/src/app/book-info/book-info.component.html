@@ -1,1 +1,11 @@
-<p>book-info works!</p>
+<img
+  class="book-image"
+  src="{{ bookInfo.imageUrl }}"
+  alt="{{ bookInfo.title }}"
+/>
+<div class="book-info">
+  <a class="book-title" href="{{ bookInfo.purchaseLink }}" target="_blank">{{
+    bookInfo.title
+  }}</a>
+  <p class="book-date">{{ bookInfo.PublishDate }}</p>
+</div>

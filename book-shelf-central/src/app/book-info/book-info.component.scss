@@ -1,0 +1,29 @@
+.book-image {
+  height: 250px;
+  width: 175px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.book-info {
+  margin-top: 10px;
+  text-align: center;
+  width: 175px;
+}
+
+.book-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #008080;
+  text-decoration: none;
+}
+
+.book-title:hover {
+  color: #00b3b3;
+}
+
+.book-date {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
+}
