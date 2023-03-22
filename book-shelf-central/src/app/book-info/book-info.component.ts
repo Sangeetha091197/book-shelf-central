@@ -8,4 +8,11 @@ import { Book } from '../model';
 })
 export class BookInfoComponent {
   @Input() bookInfo!: Book;
+  @Input()  indexVal!: number;
+
+  emitAction(event:any){
+    console.log("emeit",(event.target as Element).id)
+  }
+
+
 }

@@ -28,18 +28,27 @@
   align-items: center;
 }
 
-.add-book {
-  background-color: #007bff;
+.button-style {
+  background-color: #1883a3;
   color: #fff;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  float: right;
+  // float: right;
   border-radius: 0.3rem;
   margin: 20px;
 }
+.button-container{
+  float: right;
+}
+
 
 .add-book:hover {
   background-color: #0069d9;
 }
+
+.error {
+  color: red;
+}
+

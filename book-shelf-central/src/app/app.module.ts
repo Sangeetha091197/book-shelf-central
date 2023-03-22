@@ -7,7 +7,7 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookInfoComponent } from './book-info/book-info.component';
 import { AddModifyBookComponent } from './add-modify-book/add-modify-book.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -22,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgbAlertModule,
     NgbModule
   ],
   providers: [],

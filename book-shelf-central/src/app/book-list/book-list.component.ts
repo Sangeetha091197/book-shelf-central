@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BookShelfService } from '../book-shelf.service';
-import { AuthorList, Book, Constants, DataModel } from '../model';
+import { Alert, ALERTS, AuthorList, Book, Constants, DataModel } from '../model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
@@ -15,6 +14,11 @@ export class BookListComponent implements OnInit {
   books!: Book[];
   bookInfo!: Book;
   bookForm!: FormGroup;
+  booksLocal!: void;
+  storedBlogs!: string | null;
+  bookAdded: boolean = false;
+  indexVal!:number;
+  
   constructor(private bookShelfService: BookShelfService,private modalService: NgbModal) {}
 
   ngOnInit(): void {
@@ -22,15 +26,19 @@ export class BookListComponent implements OnInit {
       title: new FormControl('', Validators.required),
       imageUrl: new FormControl('', Validators.required),
       purchaseLink: new FormControl('', Validators.required),
-      publishDate: new FormControl('', Validators.required)
+      PublishDate: new FormControl('', [Validators.required, Validators.pattern(Constants.YEAR_PATTERN)]),
     });
-    this.getBooks();
+    this.storedBlogs = (localStorage.getItem('data'));
+    const first = this.storedBlogs ? this.data = JSON.parse(this.storedBlogs): this.getBooks();
+    this.books = this.data.books;
+    console.log(first, "here");
   }
 
   getBooks() {
     this.bookShelfService.getBookList().subscribe((result: DataModel) => {
       if (result.status == Constants.SUCCESS) {
         this.data = result.data;
+        localStorage.setItem("data", JSON.stringify(this.data));
         this.books = this.data.books;
       }
     });
@@ -49,8 +57,25 @@ export class BookListComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.bookForm,"form");
+    console.log(this.bookForm.value,"form");
+    this.books.unshift(this.bookForm.value);
+    this.data.books = this.books;
+    localStorage.setItem("data", JSON.stringify(this.data));
     this.modalService.dismissAll();
+    this.bookAdded= true;
+    setTimeout(() => {
+    this.bookAdded= false;
+    }, 5000);
+
     // perform add book operation here 
   }
+
+  onReset(){
+    localStorage.clear();
+    this.getBooks();
+  }
+
+  close() {
+		this.bookAdded= false;
+	}
 }
