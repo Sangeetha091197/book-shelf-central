@@ -1,3 +1,4 @@
+<!-- Each book information -->
 <img class="book-image" src="{{ bookInfo.imageUrl }}" alt="{{ bookInfo.title }}" />
 <div class="book-info">
   <a class="book-title" href="{{ bookInfo.purchaseLink }}" target="_blank">{{
@@ -6,6 +7,6 @@
   <p class="book-date">{{ bookInfo.PublishDate }}</p>
 </div>
 <div class="btn-container">
-<button id="modify-{{indexVal}}" class="button-style" (click)="emitAction($event)">MODIFY</button>
-<button id="delete-{{indexVal}}" class="button-style" (click)="emitAction($event)">DELETE</button>
+  <button id="modify-{{indexVal}}" class="button-style" (click)="emitAction($event)">MODIFY</button>
+  <button id="delete-{{indexVal}}" class="button-style" (click)="emitAction($event)">DELETE</button>
 </div>

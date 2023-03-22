@@ -15,7 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     BookListComponent,
     BookInfoComponent,
-    AddModifyBookComponent
+    AddModifyBookComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,9 +23,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
     NgbAlertModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

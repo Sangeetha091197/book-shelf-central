@@ -1,9 +1,11 @@
+<!-- Alert messages for successful add or update -->
 <p *ngIf="bookAdded">
-	<ngb-alert type="success" (closed)="close()">New Book added successfully</ngb-alert>
+  <ngb-alert type="success" (closed)="close()">New Book added successfully</ngb-alert>
 </p>
 <p *ngIf="bookUpdated">
-	<ngb-alert type="success" (closed)="close()">Book information Updated successfully</ngb-alert>
+  <ngb-alert type="success" (closed)="close()">Book information Updated successfully</ngb-alert>
 </p>
+<!-- Author information -->
 <div class="author-info" *ngIf="data">
   <h2 class="author-name">{{ data.author }}</h2>
   <p class="author-dob"><strong>Date of Birth:</strong> {{ data.birthday }}</p>
@@ -11,6 +13,7 @@
     <strong>Place of Birth:</strong> {{ data.birthPlace }}
   </p>
 </div>
+<!-- Button section -->
 <div class="button-container">
   <div class="col-12">
     <button (click)="openAddEditModal(content)" class="button-style">ADD BOOK</button>
@@ -19,114 +22,13 @@
     <button class="button-style" (click)="onReset()">RESET PAGE</button>
   </div>
 </div>
+<!-- Displaying list of books -->
 <div class="book-list">
-  <div
-    *ngFor="let book of books; let i = index"
-    class="book col-12 col-sm-12 col-md-6 col-lg-6"
-  >
-    <app-book-info [bookInfo]="book" [indexVal]="i" (actionID)="getActionID($event)" ></app-book-info>
+  <div *ngFor="let book of books; let i = index" class="book col-12 col-sm-12 col-md-6 col-lg-6">
+    <app-book-info [bookInfo]="book" [indexVal]="i" (actionID)="getActionID($event)"></app-book-info>
   </div>
 </div>
 <ng-template #content let-modal>
-
-  <app-add-modify-book [isAddMode]="isAddMode" [bookValue]="bookValue" (closeEvent)="modal.dismiss('Cross click')" (submitEvent)="onSubmit($event)"></app-add-modify-book>
+  <app-add-modify-book [isAddMode]="isAddMode" [bookValue]="bookValue" (closeEvent)="modal.dismiss('Cross click')"
+    (submitEvent)="onSubmit($event)"></app-add-modify-book>
 </ng-template>
-
-<!-- <ng-template  >
-  <div class="modal-header">
-    <h4 *ngIf="isAddMode" class="modal-title" id="modal-basic-title">Add New Book</h4>
-    <h4 *ngIf="!isAddMode" class="modal-title" id="modal-basic-title">Modify Book Details</h4>
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    ></button>
-  </div>
-   <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
-    <div class="modal-body">
-      <div class="mb-3">
-        <label for="title">Title *</label>
-        <div class="input-group">
-          <input
-            formControlName="title"
-            id="title"
-            type="text"
-            class="form-control"
-            placeholder="Enter the title for new book"
-            name="title"
-          />
-        </div>
-        <div *ngIf="bookForm!.controls['title'].invalid && bookForm!.controls['title'].touched">
-          <div *ngIf="bookForm!.controls['title'].errors!['required']" class="error">Title is required.</div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="imageUrl">Image URL *</label>
-        <div class="input-group">
-          <input
-            formControlName="imageUrl"
-            id="imageUrl"
-            type="text"
-            class="form-control"
-            placeholder="Enter the Image URL"
-            name="imageUrl"
-          />
-        </div>
-        <div *ngIf="bookForm!.controls['imageUrl'].invalid && bookForm!.controls['imageUrl'].touched">
-          <div *ngIf="bookForm!.controls['imageUrl'].errors!['required']" class="error">Image URL is required.</div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="purchaseLink">Purchase Link *</label>
-        <div class="input-group">
-          <input
-            formControlName="purchaseLink"
-            id="purchaseLink"
-            type="text"
-            class="form-control"
-            placeholder="Enter the Purchase Link"
-            name="purchaseLink"
-          />
-        </div>
-        <div *ngIf="bookForm!.controls['purchaseLink'].invalid && bookForm!.controls['purchaseLink'].touched">
-          <div *ngIf="bookForm!.controls['purchaseLink'].errors!['required']" class="error">Purchase Link is required.</div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="PublishDate">Published Date *</label>
-        <div class="input-group">
-          <input
-            formControlName="PublishDate"
-            id="PublishDate"
-            type="text"
-            class="form-control"
-            placeholder="Enter the Published Date in YYYY format"
-            name="PublishDate"
-          />
-        </div>
-        <div *ngIf="bookForm!.controls['PublishDate'].invalid && bookForm!.controls['PublishDate'].touched">
-          <div *ngIf="bookForm!.controls['PublishDate'].errors!['required']" class="error">Published Date is required.</div>
-          <div *ngIf="bookForm!.controls['PublishDate'].errors!['pattern']" class="error">Published Date is invalid.</div>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-outline-dark">Save</button>
- </div> 
-    <div class="modal-footer">
-      <button *ngIf="isAddMode"
-        type="submit"
-        [disabled]="bookForm.invalid"
-        class="btn btn-outline-primary"
-      >
-        Save
-      </button>
-      <button *ngIf="!isAddMode"
-        type="submit"
-        [disabled]="bookForm.invalid"
-        class="btn btn-outline-primary"
-      >
-        Update
-      </button>
-    </div>
-  </form>
-</ng-template> -->
