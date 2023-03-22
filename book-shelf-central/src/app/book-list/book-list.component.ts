@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BookShelfService } from '../book-shelf.service';
 import { Alert, ALERTS, AuthorList, Book, Constants, DataModel } from '../model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,6 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./book-list.component.scss'],
 })
 export class BookListComponent implements OnInit {
+  @ViewChild('content') content: any;
   data!: AuthorList;
   authorName!: string;
   books!: Book[];
@@ -18,7 +19,9 @@ export class BookListComponent implements OnInit {
   storedBlogs!: string | null;
   bookAdded: boolean = false;
   indexVal!:number;
-  
+  isAddMode: boolean = true;
+  selectedIndex: any;
+  bookUpdated: boolean = false;
   constructor(private bookShelfService: BookShelfService,private modalService: NgbModal) {}
 
   ngOnInit(): void {
@@ -44,7 +47,12 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  openAddEditModal(content: any): void {
+  openAddEditModal(content: any, action?: string): void {
+    if(action == "modify") {
+      this.isAddMode = false;
+    } else {
+      this.isAddMode = true;
+    }
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
 				console.log(result,"res");
@@ -58,14 +66,21 @@ export class BookListComponent implements OnInit {
 
   onSubmit(){
     console.log(this.bookForm.value,"form");
-    this.books.unshift(this.bookForm.value);
-    this.updateBooks(this.books);
+    if(this.isAddMode){
+      this.books.unshift(this.bookForm.value);
+      this.bookAdded= true;
+      setTimeout(() => {
+      this.bookAdded= false;
+      }, 5000);
+    } else {
+      this.books[this.selectedIndex]=this.bookForm.value;
+      this.bookUpdated = true;
+      setTimeout(() => {
+        this.bookUpdated= false;
+        }, 5000);
+    }
     this.modalService.dismissAll();
-    this.bookAdded= true;
-    setTimeout(() => {
-    this.bookAdded= false;
-    }, 5000);
-
+    this.updateBooks(this.books);
     // perform add book operation here 
   }
 
@@ -81,13 +96,20 @@ export class BookListComponent implements OnInit {
 
   close() {
 		this.bookAdded= false;
+    this.bookUpdated = false;
 	}
 
   getActionID(value:any){
     let action = value.split('-')[0];
     let index = value.split('-')[1];
-    console.log("got it ",action,index)
-    this.books.splice(index,1);
-    this.updateBooks(this.books);
+    console.log("got it ",action,index);
+    if(action=="delete"){
+      this.books.splice(index,1);
+      this.updateBooks(this.books);
+    } else if (action=="modify"){
+      this.selectedIndex=index;
+      this.bookForm.patchValue(this.books[index]);
+      this.openAddEditModal(this.content, action);
+    }
   }
 }

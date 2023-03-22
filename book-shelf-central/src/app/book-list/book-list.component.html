@@ -1,5 +1,8 @@
 <p *ngIf="bookAdded">
-	<ngb-alert type="success" (closed)="close()">New Book added</ngb-alert>
+	<ngb-alert type="success" (closed)="close()">New Book added successfully</ngb-alert>
+</p>
+<p *ngIf="bookUpdated">
+	<ngb-alert type="success" (closed)="close()">Book information Updated successfully</ngb-alert>
 </p>
 <div class="author-info" *ngIf="data">
   <h2 class="author-name">{{ data.author }}</h2>
@@ -27,7 +30,8 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add New Book</h4>
+    <h4 *ngIf="isAddMode" class="modal-title" id="modal-basic-title">Add New Book</h4>
+    <h4 *ngIf="!isAddMode" class="modal-title" id="modal-basic-title">Modify Book Details</h4>
     <button
       type="button"
       class="btn-close"
@@ -168,12 +172,19 @@
       <!-- <button type="submit" class="btn btn-outline-dark">Save</button> -->
     </div>
     <div class="modal-footer">
-      <button
+      <button *ngIf="isAddMode"
         type="submit"
         [disabled]="bookForm.invalid"
-        class="btn btn-outline-dark"
+        class="btn btn-outline-primary"
       >
         Save
+      </button>
+      <button *ngIf="!isAddMode"
+        type="submit"
+        [disabled]="bookForm.invalid"
+        class="btn btn-outline-primary"
+      >
+        Update
       </button>
     </div>
   </form>
