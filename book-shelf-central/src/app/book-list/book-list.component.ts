@@ -14,7 +14,7 @@ export class BookListComponent implements OnInit {
   authorName!: string;
   books!: Book[];
   bookInfo!: Book;
-  bookForm!: FormGroup;
+  // bookForm!: FormGroup;
   booksLocal!: void;
   storedBlogs!: string | null;
   bookAdded: boolean = false;
@@ -22,15 +22,16 @@ export class BookListComponent implements OnInit {
   isAddMode: boolean = true;
   selectedIndex: any;
   bookUpdated: boolean = false;
+  bookValue!: Book;
   constructor(private bookShelfService: BookShelfService,private modalService: NgbModal) {}
 
   ngOnInit(): void {
-    this.bookForm = new FormGroup({
-      title: new FormControl('', Validators.required),
-      imageUrl: new FormControl('', Validators.required),
-      purchaseLink: new FormControl('', Validators.required),
-      PublishDate: new FormControl('', [Validators.required, Validators.pattern(Constants.YEAR_PATTERN)]),
-    });
+    // this.bookForm = new FormGroup({
+    //   title: new FormControl('', Validators.required),
+    //   imageUrl: new FormControl('', Validators.required),
+    //   purchaseLink: new FormControl('', Validators.required),
+    //   PublishDate: new FormControl('', [Validators.required, Validators.pattern(Constants.YEAR_PATTERN)]),
+    // });
     this.storedBlogs = (localStorage.getItem('data'));
     const first = this.storedBlogs ? this.data = JSON.parse(this.storedBlogs): this.getBooks();
     this.books = this.data.books;
@@ -59,21 +60,21 @@ export class BookListComponent implements OnInit {
 			},
 			(reason) => {
 				console.log(reason,"rea");
-        this.bookForm.reset();
+       
 			},
 		);
   }
 
-  onSubmit(){
-    console.log(this.bookForm.value,"form");
+  onSubmit(bookValue:Book){
+    // console.log(this.bookForm.value,"form");
     if(this.isAddMode){
-      this.books.unshift(this.bookForm.value);
+      this.books.unshift(bookValue);
       this.bookAdded= true;
       setTimeout(() => {
       this.bookAdded= false;
       }, 5000);
     } else {
-      this.books[this.selectedIndex]=this.bookForm.value;
+      this.books[this.selectedIndex]=bookValue;
       this.bookUpdated = true;
       setTimeout(() => {
         this.bookUpdated= false;
@@ -108,8 +109,15 @@ export class BookListComponent implements OnInit {
       this.updateBooks(this.books);
     } else if (action=="modify"){
       this.selectedIndex=index;
-      this.bookForm.patchValue(this.books[index]);
+      this.bookValue = this.books[index];
+      // this.bookForm.patchValue(this.books[index]);
       this.openAddEditModal(this.content, action);
+    }
+  }
+
+  checkSubmit(event:Book){
+    if(this.isAddMode){
+
     }
   }
 }
