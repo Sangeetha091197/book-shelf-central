@@ -39,8 +39,26 @@
   cursor: pointer;
   border-radius: 0.3rem;
   margin: 20px;
+  width: 150px;
 }
 
 .button-container {
   float: right;
+}
+
+.btn-style{
+  width: 130px;
+  margin-right: 10px;
+  height: 30px;
+  // margin-left: 10px !important;
+  font-size: 14px;
+  border-radius: 16px !important;
+}
+
+.sort-style{
+  font-size: 14px;
+  font-weight: bold;
+  color: #262525;
+  padding: 5px;
+  background: #fff;
 }

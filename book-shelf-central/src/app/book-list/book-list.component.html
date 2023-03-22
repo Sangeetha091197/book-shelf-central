@@ -15,6 +15,12 @@
 </div>
 <!-- Button section -->
 <div class="button-container">
+  <div class="btn-group">
+    <p class="sort-style">Sorted By: </p>
+    <button class="btn-style btn  btn-{{sortByTitle ? 'warning' : 'success'}}" (click)="toggleSort()">
+     {{ sortByTitle ? " Title" : "Published Date"}}
+    </button>
+  </div>
   <div class="col-12">
     <button (click)="openAddEditModal(content)" class="button-style">ADD BOOK</button>
   </div>

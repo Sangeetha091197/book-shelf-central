@@ -23,6 +23,7 @@ export class BookListComponent implements OnInit {
   bookUpdated: boolean = false;
   bookValue!: Book;
   storedBooks!: string | null;
+  sortByTitle: boolean = true;
 
   constructor(
     private bookShelfService: BookShelfService,
@@ -45,6 +46,7 @@ export class BookListComponent implements OnInit {
         this.data = result.data;
         localStorage.setItem('data', JSON.stringify(this.data));
         this.books = this.data.books;
+        this.sortBooks();
       }
     });
   }
@@ -84,6 +86,7 @@ export class BookListComponent implements OnInit {
   updateBooks(books: Book[]): void {
     this.data.books = books;
     localStorage.setItem('data', JSON.stringify(this.data));
+    this.sortBooks();
   }
 
   // To clear the local storage
@@ -111,5 +114,22 @@ export class BookListComponent implements OnInit {
       this.bookValue = this.books[index];
       this.openAddEditModal(this.content, action);
     }
+  }
+
+  // To toggle the sort options
+  toggleSort(): void {
+    this.sortByTitle = !this.sortByTitle;
+    this.sortBooks();
+  }
+
+  // To sort the books
+  sortBooks(): void {
+    this.books.sort((a, b) => {
+      if (this.sortByTitle) {
+        return a.title.localeCompare(b.title);
+      } else {
+        return Number(a.PublishDate) - Number(b.PublishDate);
+      }
+    });
   }
 }
