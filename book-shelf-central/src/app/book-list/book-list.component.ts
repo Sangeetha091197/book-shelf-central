@@ -66,7 +66,6 @@ export class BookListComponent implements OnInit {
   }
 
   onSubmit(bookValue:Book){
-    // console.log(this.bookForm.value,"form");
     if(this.isAddMode){
       this.books.unshift(bookValue);
       this.bookAdded= true;
