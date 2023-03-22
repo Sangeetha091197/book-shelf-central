@@ -21,7 +21,7 @@
     *ngFor="let book of books; let i = index"
     class="book col-12 col-sm-12 col-md-6 col-lg-6"
   >
-    <app-book-info [bookInfo]="book" [indexVal]="i" ></app-book-info>
+    <app-book-info [bookInfo]="book" [indexVal]="i" (actionID)="getActionID($event)" ></app-book-info>
   </div>
 </div>
 

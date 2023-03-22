@@ -7,5 +7,5 @@
 </div>
 <div class="btn-container">
 <button id="modify-{{indexVal}}" class="button-style" (click)="emitAction($event)">MODIFY</button>
-<button id="delete-{{indexVal}}" class="button-style">DELETE</button>
+<button id="delete-{{indexVal}}" class="button-style" (click)="emitAction($event)">DELETE</button>
 </div>

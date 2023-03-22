@@ -59,8 +59,7 @@ export class BookListComponent implements OnInit {
   onSubmit(){
     console.log(this.bookForm.value,"form");
     this.books.unshift(this.bookForm.value);
-    this.data.books = this.books;
-    localStorage.setItem("data", JSON.stringify(this.data));
+    this.updateBooks(this.books);
     this.modalService.dismissAll();
     this.bookAdded= true;
     setTimeout(() => {
@@ -68,6 +67,11 @@ export class BookListComponent implements OnInit {
     }, 5000);
 
     // perform add book operation here 
+  }
+
+  updateBooks(books:any){
+    this.data.books =books;
+    localStorage.setItem("data", JSON.stringify(this.data));
   }
 
   onReset(){
@@ -78,4 +82,12 @@ export class BookListComponent implements OnInit {
   close() {
 		this.bookAdded= false;
 	}
+
+  getActionID(value:any){
+    let action = value.split('-')[0];
+    let index = value.split('-')[1];
+    console.log("got it ",action,index)
+    this.books.splice(index,1);
+    this.updateBooks(this.books);
+  }
 }

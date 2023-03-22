@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Book } from '../model';
 
 @Component({
@@ -9,9 +9,11 @@ import { Book } from '../model';
 export class BookInfoComponent {
   @Input() bookInfo!: Book;
   @Input()  indexVal!: number;
-
+  @Output() actionID = new EventEmitter();
   emitAction(event:any){
     console.log("emeit",(event.target as Element).id)
+    let actionID = (event.target as Element).id;
+    this.actionID.emit(actionID);
   }
 
 
