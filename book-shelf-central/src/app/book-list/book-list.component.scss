@@ -59,6 +59,28 @@
   font-size: 14px;
   font-weight: bold;
   color: #262525;
-  padding: 5px;
+  padding: 5px 5px 5px 0px;
   background: #fff;
+}
+
+header {
+	margin-bottom: 2rem;
+}
+.navbar-brand {
+	font-size: 2rem;
+	color: #eff2f5;
+	text-shadow: 2px 2px 2px rgba(168, 12, 12, 0.2);
+}
+
+
+.caption{
+  margin-top: 20px;
+}
+
+.alert-message{
+  position:fixed; 
+  top: 80px; 
+  width: 100%;
+  z-index:9999; 
+  border-radius:0px
 }

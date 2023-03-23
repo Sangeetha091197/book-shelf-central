@@ -22,14 +22,10 @@ export enum Constants {
   YEAR_PATTERN = '[0-9]{4}$',
 }
 
-export interface Alert {
-  type: string;
-  message: string;
-}
 
-export const ALERTS: Alert[] = [
-  {
-    type: 'success',
-    message: 'This is an success alert',
-  },
-];
+export const ALERTS = {
+  ADD:'New Book information added successfully',
+  UPDATE: 'Book information Updated successfully',
+  DELETE: 'Book Information deleted successfully',
+  RESET: 'Page is now reset to original data from the server'
+};

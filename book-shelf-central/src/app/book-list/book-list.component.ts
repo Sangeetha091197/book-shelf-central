@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BookShelfService } from '../book-shelf.service';
-import { AuthorList, Book, Constants, DataModel } from '../model';
+import { ALERTS, AuthorList, Book, Constants, DataModel } from '../model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
 
@@ -16,14 +16,14 @@ export class BookListComponent implements OnInit {
   authorName!: string;
   books!: Book[];
   bookInfo!: Book;
-  bookAdded: boolean = false;
+  showAlert: boolean = false;
   indexVal!: number;
   isAddMode: boolean = true;
   selectedIndex: any;
-  bookUpdated: boolean = false;
   bookValue!: Book;
   storedBooks!: string | null;
   sortByTitle: boolean = true;
+  alertMessage: string = '';
 
   constructor(
     private bookShelfService: BookShelfService,
@@ -37,6 +37,7 @@ export class BookListComponent implements OnInit {
       ? (this.data = JSON.parse(this.storedBooks))
       : this.getBooks();
     this.books = this.data.books;
+    this.sortBooks();
   }
 
   // To call GET API to retrieve the data from JSON
@@ -67,16 +68,10 @@ export class BookListComponent implements OnInit {
   onSubmit(bookValue: Book): void {
     if (this.isAddMode) {
       this.books.unshift(bookValue);
-      this.bookAdded = true;
-      setTimeout(() => {
-        this.bookAdded = false;
-      }, 5000);
+      this.showAlertfn(ALERTS.ADD);
     } else {
       this.books[this.selectedIndex] = bookValue;
-      this.bookUpdated = true;
-      setTimeout(() => {
-        this.bookUpdated = false;
-      }, 5000);
+      this.showAlertfn(ALERTS.UPDATE);
     }
     this.modalService.dismissAll();
     this.updateBooks(this.books);
@@ -93,12 +88,12 @@ export class BookListComponent implements OnInit {
   onReset(): void {
     localStorage.clear();
     this.getBooks();
+    this.showAlertfn(ALERTS.RESET);
   }
 
   // To close add or modify form modal
   close(): void {
-    this.bookAdded = false;
-    this.bookUpdated = false;
+    this.showAlert = false;
   }
 
   // To identify whether modify or delete button is clicked
@@ -109,6 +104,7 @@ export class BookListComponent implements OnInit {
     if (action == 'delete') {
       this.books.splice(index, 1);
       this.updateBooks(this.books);
+      this.showAlertfn(ALERTS.DELETE);
     } else if (action == 'modify') {
       this.selectedIndex = index;
       this.bookValue = this.books[index];
@@ -131,5 +127,14 @@ export class BookListComponent implements OnInit {
         return Number(a.PublishDate) - Number(b.PublishDate);
       }
     });
+  }
+
+  // To Show Alert message
+  showAlertfn(message: string): void {
+    this.alertMessage = message;
+    this.showAlert = true;
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 5000);
   }
 }
